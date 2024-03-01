@@ -50,6 +50,15 @@ public class ChannelController {
         return ResponseEntity.ok(channelMessages);
     }
 
+    @GetMapping("/default")
+    @Operation(summary = "Renvoie le canal par défaut")
+    public ResponseEntity<?> getDefaultChannel() {
+        Optional<Channel> channelOptional = channelService.findById(1);
+        if(channelOptional.isEmpty())
+            return ResponseEntity.badRequest().body(Map.of("message", "Ce canal n'existe pas"));
+        return ResponseEntity.ok(channelOptional);
+    }
+
     @DeleteMapping("/{idChannel}")
     @Operation(summary = "Supprime un Canal")
     public ResponseEntity<?> deleteChannel(@PathVariable("idChannel") Integer idChannel){
